@@ -1,6 +1,6 @@
 Program lidotel;
 
-Uses crt, sysutils;
+Uses crt, sysutils, classes;
 
 Type 
   cliente = Record
@@ -28,14 +28,18 @@ Type
     End;
   End;
 
+const
+
+LIMITE_HABITACIONES=133;
+
 Var 
-  opcion, subopcion, cantidadadultos, cantidadhijos, i: integer;
+  opcion, subopcion, cantidadadultos, cantidadhijos, i, habitacionesOcupadas: integer;
   nuevocliente: cliente;
   nuevoacompaniante: clienteacompaniado;
   nuevogrupo: clientegrupo;
-  archivo: Text;
+
 Procedure MostrarBienvenida;
-begin
+Begin
   ClrScr;
   TextColor(LightBlue);
   WriteLn('|==================================================|');
@@ -44,12 +48,12 @@ begin
   WriteLn('|==================================================|');
   TextColor(White);
   WriteLn('Presiones Enter para comenzar...');
-  while ReadKey <> #13 do;
-end;
+  While ReadKey <> #13 Do;
+End;
 
 
 Procedure MostrarSalida;
-begin
+Begin
   ClrScr;
   TextColor(LightBlue);
   WriteLn('|==================================================|');
@@ -58,9 +62,8 @@ begin
   WriteLn('|===                                            ===|');
   WriteLn('|==================================================|');
   TextColor(White);
-  Sleep(3000);
-  while ReadKey <> #13 do;
-end;  
+  Sleep(4000);
+End;
 
 
 Procedure MostrarMenu();
@@ -72,12 +75,14 @@ Begin
   WriteLn('|==================================|');
   Writeln('|2. Buscar cliente                 |');
   WriteLn('|==================================|');
-  Writeln('|3. Salir                          |');
+  Writeln('|3. Eliminar Reservacion           |');
+  WriteLn('|==================================|');
+  Writeln('|4. Salir                          |');
   WriteLn('|==================================|');
   TextColor(White);
   Writeln('Seleccione una opcion: ');
-  
 End;
+
 
 
 Procedure MostrarTipoReservacion();
@@ -98,12 +103,13 @@ Begin
 End;
 
 
+
 Procedure MostrarDetallesHabitaciones();
 Begin
   clrscr;
   TextColor(LightGreen);
   Writeln('|========================= Detalles de las habitaciones ===========================|');
-  Writeln('|1. FAMILY ROOM - 200$ por noche                                                   |');
+  Writeln('|1. FAMILY ROOM - 200$ por noche                                                   |' );
   Writeln('|Calida y confortable habitacion decorada con un estilo vanguardista,              |');
   Writeln('|100% libre de humo, cama Lidotel Royal King, con reloj despertador,               |');
   Writeln('|TV 32 pulgadas HD Plasma con cable, banio con ducha, cafetera electrica,          |');
@@ -138,6 +144,7 @@ Begin
 End;
 
 
+
 Procedure GuardarRegistroIndividual(cliente: cliente);
 
 Var 
@@ -149,9 +156,9 @@ Begin
   Else
     Rewrite(archivo);
 
+  WriteLn(archivo, 'Cedula: ', cliente.cedula);
   WriteLn(archivo, 'Nombre: ', cliente.nombre);
   WriteLn(archivo, 'Apellido: ', cliente.apellido);
-  WriteLn(archivo, 'Cedula: ', cliente.cedula);
   WriteLn(archivo, 'Email: ', cliente.email);
   WriteLn(archivo, 'Telefono: ', cliente.telefono);
   WriteLn(archivo, 'Dias de estadia: ', cliente.dias);
@@ -178,9 +185,9 @@ Begin
     Rewrite(archivo);
 
   WriteLn(archivo, '--- Cliente Principal ---');
+  WriteLn(archivo, 'Cedula: ', registro.cliente.cedula);
   WriteLn(archivo, 'Nombre: ', registro.cliente.nombre);
   WriteLn(archivo, 'Apellido: ', registro.cliente.apellido);
-  WriteLn(archivo, 'Cedula: ', registro.cliente.cedula);
   WriteLn(archivo, 'Email: ', registro.cliente.email);
   WriteLn(archivo, 'Telefono: ', registro.cliente.telefono);
   WriteLn(archivo, 'Dias de estadia: ', registro.cliente.dias);
@@ -189,9 +196,9 @@ Begin
   WriteLn(archivo);
 
   WriteLn(archivo, '--- Acompaniante ---');
+  WriteLn(archivo, 'Cedula: ', registro.acompaniante.cedula);
   WriteLn(archivo, 'Nombre: ', registro.acompaniante.nombre);
   WriteLn(archivo, 'Apellido: ', registro.acompaniante.apellido);
-  WriteLn(archivo, 'Cedula: ', registro.acompaniante.cedula);
   WriteLn(archivo, 'Email: ', registro.acompaniante.email);
   WriteLn(archivo, 'Telefono: ', registro.acompaniante.telefono);
   WriteLn(archivo, 'Dias de estadia: ', registro.acompaniante.dias);
@@ -202,7 +209,7 @@ Begin
   WriteLn(archivo, '------------------------------------');
   Close(archivo);
 
-  Writeln('Reservacion acompanada guardada correctamente.');
+  Writeln('Reservacion acompañada guardada correctamente.');
   Writeln('Presione Enter para continuar');
   While ReadKey <> #13 Do
 End;
@@ -222,13 +229,12 @@ Begin
 
   WriteLn(archivo, '--- Reservacion en Grupo ---');
 
-  // Guardar los adultos
   For i := 0 To High(registro.adultos) Do
     Begin
+      WriteLn(archivo, 'Cedula: ', registro.adultos[i].cedula);
       WriteLn(archivo, '--- Adulto ', i + 1, ' ---');
       WriteLn(archivo, 'Nombre: ', registro.adultos[i].nombre);
       WriteLn(archivo, 'Apellido: ', registro.adultos[i].apellido);
-      WriteLn(archivo, 'Cedula: ', registro.adultos[i].cedula);
       WriteLn(archivo, 'Email: ', registro.adultos[i].email);
       WriteLn(archivo, 'Telefono: ', registro.adultos[i].telefono);
       WriteLn(archivo, 'Dias de estadia: ', registro.adultos[i].dias);
@@ -236,10 +242,9 @@ Begin
       WriteLn(archivo, 'Precio por noche: ', registro.adultos[i].preciopornoche:0:2, ' $');
     End;
 
-  // Guardar los niños
   For j := 0 To High(registro.ninios) Do
     Begin
-      WriteLn(archivo, '--- Niño ', j + 1, ' ---');
+      WriteLn(archivo, '--- Nino ', j + 1, ' ---');
       WriteLn(archivo, 'Nombre: ', registro.ninios[j].nombre);
       WriteLn(archivo, 'Apellido: ', registro.ninios[j].apellido);
       WriteLn(archivo, 'Edad: ', registro.ninios[j].edad);
@@ -257,58 +262,139 @@ Procedure BuscarCliente;
 Var 
   archivo: Text;
   linea, busqueda: string;
-  encontrado, clienteCompleto: Boolean;
+  encontrado: Boolean;
+  archivos: array[1..3] Of string;
+  i: Integer;
 Begin
   clrscr;
-  Writeln('Ingrese cédula o nombre del cliente a buscar:');
+  Writeln('Ingrese la cedula completa del cliente a buscar:');
   ReadLn(busqueda);
   encontrado := False;
-  clienteCompleto := False;
 
-  Assign(archivo, 'registros.txt');
-  {$I-}
-  // Desactiva manejo automático de errores
-  Reset(archivo);
-  {$I+}
-  // Reactiva manejo automático de errores
+  archivos[1] := 'ReservacionIndividual.txt';
+  archivos[2] := 'ReservacionAcompanado.txt';
+  archivos[3] := 'ReservacionGrupo.txt';
 
-  If IOResult <> 0 Then
+  For i := 1 To 3 Do
     Begin
-      Writeln('No se pudo abrir el archivo. Asegúrese de que el archivo exista.');
-      Writeln('Presione Enter para continuar...');
-      While ReadKey <> #13 Do;
-      Exit;
-    End;
-
-  While Not EOF(archivo) Do
-    Begin
-      ReadLn(archivo, linea);
-
-
- // Si encontramos el cliente, mostramos toda la información hasta el separador
-      If (Pos(busqueda, linea) > 0) Then
+      If FileExists(archivos[i]) Then
         Begin
-          encontrado := True;
-          clienteCompleto := True;
-        End;
+          Assign(archivo, archivos[i]);
+          Reset(archivo);
+          While Not EOF(archivo) Do
+            Begin
+              ReadLn(archivo, linea);
 
-      If clienteCompleto Then
-        Begin
-          Writeln(linea);
-          If (linea = '------------------------------------') Then
-            Break;
+              If (Pos(busqueda, linea) > 0) And (Pos('Cedula:', linea) > 0) Then
+                Begin
+                  Writeln('Cliente encontrado en ', archivos[i]);
+                  Writeln('------------------------------------');
+                  Writeln(linea);
+
+
+                  While Not EOF(archivo) Do
+                    Begin
+                      ReadLn(archivo, linea);
+                      Writeln(linea);
+
+                      If (Pos('------------------------------------', linea) > 0) Then
+                        Break;
+                    End;
+                  encontrado := True;
+                  Break;
+                End;
+            End;
+          Close(archivo);
         End;
     End;
 
   If Not encontrado Then
-    Writeln('No se encontró el cliente.');
-
-  Close(archivo);
+    Writeln('No se encontro al cliente con esa cedula.');
 
   Writeln('Presione Enter para continuar.');
   While ReadKey <> #13 Do;
 End;
 
+
+Procedure EliminarDeArchivo(archivoNombre: String; cedulaEliminar: String);
+
+Var 
+  archivo, archivoTemporal: Text;
+  linea, cedulaActual: String;
+  encontrado: Boolean;
+Begin
+  Assign(archivo, archivoNombre);
+  Assign(archivoTemporal, 'ReservacionTemporal.txt');
+
+  If Not FileExists(archivoNombre) Then
+    Begin
+      Writeln('El archivo ', archivoNombre, ' no existe.');
+      Exit;
+    End;
+
+  Reset(archivo);
+  Rewrite(archivoTemporal);
+
+  encontrado := False;
+
+  While Not Eof(archivo) Do
+    Begin
+      ReadLn(archivo, linea);
+
+      If Pos('Cedula: ', linea) = 1 Then
+        Begin
+          cedulaActual := Copy(linea, Pos(':', linea) + 2, Length(linea));
+
+          If cedulaActual = cedulaEliminar Then
+            Begin
+              encontrado := True;
+
+              Repeat
+                ReadLn(archivo, linea);
+              Until (Eof(archivo)) Or (linea =
+                    '------------------------------------');
+
+              Continue;
+            End;
+        End;
+
+      WriteLn(archivoTemporal, linea);
+    End;
+
+  Close(archivo);
+  Close(archivoTemporal);
+
+  If encontrado Then
+    Begin
+      Erase(archivo);
+      Rename(archivoTemporal, archivoNombre);
+      Writeln('Reservacion eliminada correctamente del archivo ', archivoNombre);
+    End
+  Else
+    Begin
+      Erase(archivoTemporal);
+      Writeln('No se encontro una reservación con esa cedula en el archivo ',archivoNombre);
+    End;
+End;
+
+
+
+Procedure EliminarReservacion;
+
+Var 
+  cedulaEliminar: string;
+Begin
+  clrscr;
+  Writeln('Ingrese la cedula del cliente cuya reservacion desea eliminar: ');
+  ReadLn(cedulaEliminar);
+
+  EliminarDeArchivo('ReservacionIndividual.txt', cedulaEliminar);
+  EliminarDeArchivo('ReservacionAcompanado.txt', cedulaEliminar);
+  EliminarDeArchivo('ReservacionGrupo.txt', cedulaEliminar);
+
+  Writeln('Presione Enter para continuar.');
+  While ReadKey <> #13 Do;
+End;
 
 
 
@@ -415,6 +501,15 @@ End;
 
 Procedure ReservarCliente(Var cliente: cliente);
 Begin
+  
+  If habitacionesOcupadas >= LIMITE_HABITACIONES Then
+    Begin
+      Writeln('No hay más habitaciones disponibles. Límite alcanzado de ',LIMITE_HABITACIONES, ' habitaciones.');
+      Writeln('Presione Enter para continuar');
+      While ReadKey <> #13 Do
+        Exit;
+    End;
+
   clrscr;
   SolicitarNombreApellido(cliente.nombre,'Nombre'); 
 
@@ -437,19 +532,11 @@ Begin
   MostrarDetallesHabitaciones();
 
   clrscr;
-  TextColor(LightGreen);
-  WriteLn('===================================');
-  Writeln('|Seleccione tipo de habitaciones: |');
-  WriteLn('|=================================|');
-  Writeln('|1. FAMILY ROOM - 200$ por noche  |');
-  WriteLn('|=================================|');
-  Writeln('|2. SENCILLA - 60$ por noche      |');
-  WriteLn('|=================================|');
-  Writeln('|3. DOBLE - 120$ por noche        |');
-  WriteLn('|=================================|');
-  Writeln('|4. SUITE - 300$ por noche        |');
-  WriteLn('|=================================|');
-  TextColor(white);
+  Writeln('Seleccione tipo de habitaciones: ');
+  Writeln('1. FAMILY ROOM - 200$ por noche');
+  Writeln('2. SENCILLA - 60$ por noche');
+  Writeln('3. DOBLE - 120$ por noche');
+  Writeln('4. SUITE - 300$ por noche');
   Writeln('Seleccione: ');
   ReadLn(subopcion);
 
@@ -479,6 +566,8 @@ Begin
     exit;
   End;
 
+  Inc(habitacionesOcupadas);
+
   Writeln('Datos de la reservacion:');
   Writeln('Nombre: ', cliente.nombre);
   Writeln('Apellido: ', cliente.apellido);
@@ -490,13 +579,23 @@ Begin
   Writeln('Precio por noche: ', cliente.preciopornoche:0:2, ' $');
   Writeln('Total a pagar: ', (cliente.dias * cliente.preciopornoche):0:2,' $' );
   WriteLn('Presione Enter para continuar');
+
   GuardarRegistroIndividual(cliente);
-  While ReadKey <> #13 Do
 End;
 
 
 Procedure ReservarAcompaniado(Var registro: clienteacompaniado);
 Begin
+
+  If habitacionesOcupadas >= LIMITE_HABITACIONES Then
+  Begin
+    Writeln('No hay más habitaciones disponibles. Límite alcanzado de ',LIMITE_HABITACIONES, ' habitaciones.');
+    Writeln('Presione Enter para continuar');
+    While ReadKey <> #13 Do
+      Exit;
+  End;
+
+
   Writeln('--- Reservacion Cliente Principal ---');
   SolicitarNombreApellido(registro.cliente.nombre, 'Nombre');
 
@@ -519,19 +618,11 @@ Begin
   MostrarDetallesHabitaciones();
 
   clrscr;
-  TextColor(LightGreen);
-  WriteLn('===================================');
-  Writeln('|Seleccione tipo de habitaciones: |');
-  WriteLn('|=================================|');
-  Writeln('|1. FAMILY ROOM - 200$ por noche  |');
-  WriteLn('|=================================|');
-  Writeln('|2. SENCILLA - 60$ por noche      |');
-  WriteLn('|=================================|');
-  Writeln('|3. DOBLE - 120$ por noche        |');
-  WriteLn('|=================================|');
-  Writeln('|4. SUITE - 300$ por noche        |');
-  WriteLn('|=================================|');
-  TextColor(White);
+  Writeln('Seleccione tipo de habitaciones: ');
+  Writeln('1. FAMILY ROOM - 200$ por noche');
+  Writeln('2. SENCILLA - 60$ por noche');
+  Writeln('3. DOBLE - 120$ por noche');
+  Writeln('4. SUITE - 300$ por noche');
   Writeln('Seleccione: ');
   ReadLn(subopcion);
 
@@ -563,6 +654,9 @@ Begin
 
   End;
 
+  Inc(habitacionesOcupadas);
+
+
   Writeln('--- Datos del acompaniante ---');
 
   clrscr;
@@ -584,6 +678,7 @@ Begin
   registro.acompaniante.habitacion := registro.cliente.habitacion;
   registro.acompaniante.preciopornoche := registro.cliente.preciopornoche;
 
+  clrscr;
   Writeln('====== Datos de la reservacion ======:');
   Writeln('--- Datos del cliente ---');
   Writeln('Nombre: ', registro.cliente.nombre);
@@ -594,8 +689,9 @@ Begin
   Writeln('Dias de estadia: ', registro.cliente.dias);
   Writeln('Habitacion: ', registro.cliente.habitacion);
   Writeln('Precio por noche: ', registro.cliente.preciopornoche:0:2,' $');
-  Writeln('Total a pagar: ', (registro.cliente.dias * registro.cliente.preciopornoche):0:2,' $');
   WriteLn('Presione Enter para continuar');
+
+  WriteLn;
 
   Writeln('--- Datos del acompaniante ---');
   Writeln('Nombre: ', registro.acompaniante.nombre);
@@ -613,81 +709,176 @@ End;
 
 
 Procedure ReservarGrupo(Var registro: clientegrupo);
+
+Var 
+  montoTotal: Real;
 Begin
+
+  If habitacionesOcupadas >= LIMITE_HABITACIONES Then
+  Begin
+    Writeln('No hay más habitaciones disponibles. Límite alcanzado de ', LIMITE_HABITACIONES, ' habitaciones.');
+    Writeln('Presione Enter para continuar');
+    While ReadKey <> #13 Do;
+    Exit;
+  End;
+
   Writeln('Ingrese la cantidad de adultos: ');
   ReadLn(cantidadadultos);
   SetLength(registro.adultos, cantidadadultos);
 
+  MostrarDetallesHabitaciones();  
+
+  ClrScr;
+  Writeln('Seleccione tipo de habitaciones: ');
+  Writeln('1. FAMILY ROOM - 200$ por noche');
+  Writeln('2. SENCILLA - 60$ por noche');
+  Writeln('3. DOBLE - 120$ por noche');
+  Writeln('4. SUITE - 300$ por noche');
+  Writeln('Seleccione: ');
+  ReadLn(subopcion);
+
+  Case subopcion Of 
+    1:
+       Begin
+         registro.adultos[0].habitacion := 'FAMILY ROOM';
+         registro.adultos[0].preciopornoche := 200;
+       End;
+    2:
+       Begin
+         registro.adultos[0].habitacion := 'SENCILLA';
+         registro.adultos[0].preciopornoche := 60;
+       End;
+    3:
+       Begin
+         registro.adultos[0].habitacion := 'DOBLE';
+         registro.adultos[0].preciopornoche := 120;
+       End;
+    4:
+       Begin
+         registro.adultos[0].habitacion := 'SUITE';
+         registro.adultos[0].preciopornoche := 300;
+       End;
+    Else
+      Begin
+        Writeln('Opción inválida.');
+        Exit;
+      End;
+  End;
+
+  Inc(habitacionesOcupadas);
+
+  Writeln('Ingrese Dias de estadia para todo el grupo: ');
+  ReadLn(registro.adultos[0].dias);
+
+
   For i := 0 To cantidadadultos - 1 Do
     Begin
       Writeln('--- Datos del adulto ', i + 1, ' ---');
-      ReservarCliente(registro.adultos[i]);
+      clrscr;
+      Writeln('Ingrese Nombre: ');
+      ReadLn(registro.adultos[i].nombre);
+      clrscr;
+      Writeln('Ingrese Apellido: ');
+      ReadLn(registro.adultos[i].apellido);
+      clrscr;
+      Writeln('Ingrese Cedula: ');
+      ReadLn(registro.adultos[i].cedula);
+      clrscr;
+      Writeln('Ingrese Email: ');
+      ReadLn(registro.adultos[i].email);
+      clrscr;
+      Writeln('Ingrese Telefono: ');
+      ReadLn(registro.adultos[i].telefono);
+      registro.adultos[i].habitacion := registro.adultos[0].habitacion;
+      registro.adultos[i].dias := registro.adultos[0].dias;
+      registro.adultos[i].preciopornoche := registro.adultos[0].preciopornoche;
     End;
-
+  clrscr;
   Writeln('¿Tiene hijos? (1. Si / 2. No): ');
   ReadLn(subopcion);
 
   If subopcion = 1 Then
     Begin
+      clrscr;
       Writeln('Ingrese la cantidad de hijos: ');
       ReadLn(cantidadhijos);
       SetLength(registro.ninios, cantidadhijos);
 
       For i := 0 To cantidadhijos - 1 Do
         Begin
+          clrscr;
           Writeln('--- Datos del hijo ', i + 1, ' ---');
           Writeln('Ingrese Nombre: ');
           ReadLn(registro.ninios[i].nombre);
+          clrscr;
           Writeln('Ingrese Apellido: ');
           ReadLn(registro.ninios[i].apellido);
+          clrscr;
           Writeln('Ingrese Edad: ');
           ReadLn(registro.ninios[i].edad);
         End;
     End;
-    GuardarRegistroGrupo(nuevogrupo);
+
+  montoTotal := 0;
+  For i := 0 To cantidadadultos - 1 Do
+    Begin
+      montoTotal := montoTotal + (registro.adultos[i].preciopornoche * registro.adultos[i].dias);
+    End;
+
+  Writeln('Monto total para el grupo: ', montoTotal:0:2, ' $');
+
+  GuardarRegistroGrupo(registro);
 End;
 
 
 Begin
+  habitacionesOcupadas := 0;
   clrscr;
+  MostrarBienvenida ();
   Repeat
-    MostrarBienvenida;
     MostrarMenu();
     ReadLn(opcion);
-    MostrarSalida;
     Case opcion Of 
       1:
          Begin
-          MostrarTipoReservacion;
-          ReadLn(subopcion);
-          Case subopcion Of
-          1:
-            Begin
-              Writeln('--- Reservacion Individual ---');
-              ReservarCliente(nuevocliente);
-            End;
-          2:
-            Begin
-              Writeln('--- Reservacion Acompañado ---');
-              ReservarAcompaniado(nuevoacompaniante);
-            End;
-          3:
-            Begin
-              Writeln('--- Reservacion Grupo/Familia ---');
-              ReservarGrupo(nuevogrupo);
-            End;
-          Else
-            Writeln('Opción inválida.');
-          End;
-        End;
+           MostrarTipoReservacion;
+           ReadLn(subopcion);
+           Case subopcion Of 
+             1:
+                Begin
+                  Writeln('--- Reservacion Individual ---');
+                  ReservarCliente(nuevocliente);
+                End;
+             2:
+                Begin
+                  Writeln('--- Reservacion Acompañado ---');
+                  ReservarAcompaniado(nuevoacompaniante);
+                End;
+             3:
+                Begin
+                  Writeln('--- Reservacion Grupo/Familia ---');
+                  ReservarGrupo(nuevogrupo);
+                End;
+             Else
+               Writeln('Opción inválida.');
+           End;
+         End;
       2:
          Begin
            Writeln('--- Buscar Cliente ---');
            BuscarCliente;
          End;
-      3: Exit;
-      Else
-        Writeln('Opcion invalida.');
+      3:
+         Begin
+           Writeln('--- Eliminar Reservacion ---');
+           EliminarReservacion;
+         End;
+      4: 
+        Begin
+          MostrarSalida;
+          Exit;
+        End;
     End;
   Until False;
 End.
+

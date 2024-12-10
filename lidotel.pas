@@ -176,6 +176,7 @@ End;
 Procedure GuardarRegistroAcompanado(registro: clienteacompaniado);
 
 Var 
+  total:real;
   archivo: Text;
 Begin
   Assign(archivo, 'ReservacionAcompanado.txt');
@@ -205,6 +206,8 @@ Begin
   WriteLn(archivo, 'Habitacion: ', registro.acompaniante.habitacion);
   WriteLn(archivo, 'Precio por noche: ', registro.acompaniante.preciopornoche:0:2, ' $');
   WriteLn(archivo);
+  total := registro.cliente.dias * registro.cliente.preciopornoche;
+  WriteLn(archivo, 'Total a pagar por la reservacion: ', total:0:2, ' $');
 
   WriteLn(archivo, '------------------------------------');
   Close(archivo);
@@ -373,7 +376,7 @@ Begin
   Else
     Begin
       Erase(archivoTemporal);
-      Writeln('No se encontro una reservación con esa cedula en el archivo ',archivoNombre);
+      Writeln('No se encontro una reservacion con esa cedula en el archivo ',archivoNombre);
     End;
 End;
 
@@ -704,6 +707,10 @@ Begin
   Writeln('Precio por noche: ', registro.acompaniante.preciopornoche:0:2, ' $');
   Writeln('Total a pagar: ', (registro.acompaniante.dias * registro.acompaniante.preciopornoche):0:2,' $');
 
+  Writeln('====== Monto total ======');
+  Writeln('Total a pagar: ', (registro.cliente.dias * registro.cliente. preciopornoche): 0:2, ' $');
+
+
   GuardarRegistroAcompanado(registro);
 End;
 
@@ -822,7 +829,7 @@ Begin
   montoTotal := 0;
   For i := 0 To cantidadadultos - 1 Do
     Begin
-      montoTotal := montoTotal + (registro.adultos[i].preciopornoche * registro.adultos[i].dias);
+      montoTotal := registro.adultos[0].preciopornoche * registro.adultos[0].dias;
     End;
 
   Writeln('Monto total para el grupo: ', montoTotal:0:2, ' $');

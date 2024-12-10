@@ -54,7 +54,7 @@ begin
   TextColor(LightBlue);
   WriteLn('|==================================================|');
   WriteLn('|===                                            ===|');
-  WriteLn('|===        GRACIAS POR SU RESERVACION.         ===|');
+  WriteLn('|===            ESTAMOS PARA SERVIRLE.          ===|');
   WriteLn('|===                                            ===|');
   WriteLn('|==================================================|');
   TextColor(White);

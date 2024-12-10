@@ -1,0 +1,22 @@
+--- Reservacion en Grupo ---
+--- Adulto 1 ---
+Nombre: Gino
+Apellido: Cova
+Cedula: 32051249
+Email: ginomargiotta04@gmail.com
+Telefono: 04147932852
+Dias de estadia: 2
+Habitacion: SUITE
+Precio por noche: 300.00 $
+--- Niño 1 ---
+Nombre: Mauro
+Apellido: Cova
+Edad: 3
+--- Niño 2 ---
+Nombre: Aura
+Apellido: Margiotta
+Edad: 2
+--- Niño 3 ---
+Nombre: Massimo
+Apellido: Margiotta
+Edad: 6

@@ -34,25 +34,66 @@ Var
   nuevoacompaniante: clienteacompaniado;
   nuevogrupo: clientegrupo;
   archivo: Text;
+Procedure MostrarBienvenida;
+begin
+  ClrScr;
+  TextColor(LightBlue);
+  WriteLn('|==================================================|');
+  WriteLn('|===               BIENVENIDOS AL               ===|');
+  WriteLn('|===      HOTEL LIDOTEL BOUTIQUE MARGARITA      ===|');
+  WriteLn('|==================================================|');
+  TextColor(White);
+  WriteLn('Presiones Enter para comenzar...');
+  while ReadKey <> #13 do;
+end;
+
+
+Procedure MostrarSalida;
+begin
+  ClrScr;
+  TextColor(LightBlue);
+  WriteLn('|==================================================|');
+  WriteLn('|===                                            ===|');
+  WriteLn('|===        GRACIAS POR SU RESERVACION.         ===|');
+  WriteLn('|===                                            ===|');
+  WriteLn('|==================================================|');
+  TextColor(White);
+  Sleep(3000);
+  while ReadKey <> #13 do;
+end;  
+
 
 Procedure MostrarMenu();
 Begin
   clrscr;
+  TextColor(LightGreen);
   Writeln('==== Lidotel Boutique Margarita ====');
-  Writeln('1. Nuevo cliente');
-  Writeln('2. Buscar cliente');
-  Writeln('3. Salir');
-  Writeln('Seleccione una opcion:');
+  Writeln('|1. Nuevo cliente                  |');
+  WriteLn('|==================================|');
+  Writeln('|2. Buscar cliente                 |');
+  WriteLn('|==================================|');
+  Writeln('|3. Salir                          |');
+  WriteLn('|==================================|');
+  TextColor(White);
+  Writeln('Seleccione una opcion: ');
+  
 End;
 
 
 Procedure MostrarTipoReservacion();
 Begin
   clrscr;
-  Writeln('Seleccione el tipo de reservacion:');
-  Writeln('1. Individual');
-  Writeln('2. Acompaniado');
-  Writeln('3. Grupo/Familia');
+  TextColor(LightGreen);
+  WriteLn('=====================================');
+  Writeln('|Seleccione el tipo de reservacion: |');
+  WriteLn('|===================================|');
+  Writeln('|1. Individual                      |');
+  WriteLn('|===================================|');
+  Writeln('|2. Acompaniado                     |');
+  WriteLn('|===================================|');
+  Writeln('|3. Grupo/Familia                   |');
+  WriteLn('|===================================|');
+  TextColor(White);
   Writeln('Seleccione: ');
 End;
 
@@ -60,36 +101,38 @@ End;
 Procedure MostrarDetallesHabitaciones();
 Begin
   clrscr;
-  Writeln('==== Detalles de las habitaciones ====');
-  Writeln('1. FAMILY ROOM - 200$ por noche');
-  Writeln('Calida y confortable habitacion decorada con un estilo vanguardista,');
-  Writeln('100% libre de humo, cama Lidotel Royal King, con reloj despertador,');
-  Writeln('TV 32 pulgadas HD Plasma con cable, banio con ducha, cafetera electrica,');
-  Writeln('nevera ejecutiva, caja electrónica de seguridad y secador de cabello.');
-  Writeln('Incluye: Desayuno Buffet, WIFI, piscina, gimnasio, sillas y toldos en la playa.');
-  Writeln;
+  TextColor(LightGreen);
+  Writeln('|========================= Detalles de las habitaciones ===========================|');
+  Writeln('|1. FAMILY ROOM - 200$ por noche                                                   |');
+  Writeln('|Calida y confortable habitacion decorada con un estilo vanguardista,              |');
+  Writeln('|100% libre de humo, cama Lidotel Royal King, con reloj despertador,               |');
+  Writeln('|TV 32 pulgadas HD Plasma con cable, banio con ducha, cafetera electrica,          |');
+  Writeln('|nevera ejecutiva, caja electrónica de seguridad y secador de cabello.             |');
+  Writeln('|Incluye: Desayuno Buffet, WIFI, piscina, gimnasio, sillas y toldos en la playa.   |');
+  WriteLn('|==================================================================================|');
 
-  Writeln('2. SENCILLA - 60$ por noche');
-  Writeln('Amplia y confortable habitacion decorada con un estilo vanguardista,');
-  Writeln('cama Lidotel Royal King con sábanas de algodón egipcio, soporte para iPod,');
-  Writeln('TV 32 pulgadas HD Plasma con cable, banio con ducha, cafetera electrica.');
-  Writeln('Incluye: Desayuno Buffet, WIFI, piscina, gimnasio.');
-  Writeln;
+  Writeln('|2. SENCILLA - 60$ por noche                                                       |');
+  Writeln('|Amplia y confortable habitacion decorada con un estilo vanguardista,              |');
+  Writeln('|cama Lidotel Royal King con sábanas de algodón egipcio, soporte para iPod,        |');
+  Writeln('|TV 32 pulgadas HD Plasma con cable, banio con ducha, cafetera electrica.          |');
+  Writeln('|Incluye: Desayuno Buffet, WIFI, piscina, gimnasio.                                |');
+  WriteLn('|==================================================================================|');
 
-  Writeln('3. DOBLE - 120$ por noche');
-  Writeln('Amplia y confortable habitacion decorada con un estilo vanguardista,');
-  Writeln('Dos Camas Lidotel Full, soporte para iPod, TV 32 pulgadas HD Plasma con cable,');
-  Writeln('banio con ducha, cafetera electrica.');
-  Writeln('Incluye: Desayuno Buffet, WIFI, piscina, gimnasio.');
-  Writeln;
+  Writeln('|3. DOBLE - 120$ por noche                                                         |');
+  Writeln('|Amplia y confortable habitacion decorada con un estilo vanguardista,              |');
+  Writeln('|Dos Camas Lidotel Full, soporte para iPod, TV 32 pulgadas HD Plasma con cable,    |');
+  Writeln('|banio con ducha, cafetera electrica.                                              |');
+  Writeln('|Incluye: Desayuno Buffet, WIFI, piscina, gimnasio.                                |');
+  WriteLn('|==================================================================================|');
 
-  Writeln('4. SUITE - 300$ por noche');
-  Writeln('Calida y confortable habitacion decorada con un estilo vanguardista,');
-  Writeln('100% libre de humo, cama Lidotel Royal King, con reloj despertador,');
-  Writeln('TV 32 pulgadas HD Plasma con cable, 2 baños con ducha, cafetera electrica,');
-  Writeln('nevera ejecutiva.');
-  Writeln('Incluye: Desayuno Buffet, WIFI, piscina, gimnasio, sillas y toldos en la playa.');
-  Writeln('========================================');
+  Writeln('|4. SUITE - 300$ por noche                                                         |');
+  Writeln('|Calida y confortable habitacion decorada con un estilo vanguardista,              |');
+  Writeln('|100% libre de humo, cama Lidotel Royal King, con reloj despertador,               |');
+  Writeln('|TV 32 pulgadas HD Plasma con cable, 2 baños con ducha, cafetera electrica,        |');
+  Writeln('|nevera ejecutiva.                                                                 |');
+  Writeln('|Incluye: Desayuno Buffet, WIFI, piscina, gimnasio, sillas y toldos en la playa.   |');
+  Writeln('|==================================================================================|');
+  TextColor(White);
   WriteLn('Presione Enter para continuar');
   While ReadKey <> #13 Do
 End;
@@ -394,11 +437,19 @@ Begin
   MostrarDetallesHabitaciones();
 
   clrscr;
-  Writeln('Seleccione tipo de habitaciones: ');
-  Writeln('1. FAMILY ROOM - 200$ por noche');
-  Writeln('2. SENCILLA - 60$ por noche');
-  Writeln('3. DOBLE - 120$ por noche');
-  Writeln('4. SUITE - 300$ por noche');
+  TextColor(LightGreen);
+  WriteLn('===================================');
+  Writeln('|Seleccione tipo de habitaciones: |');
+  WriteLn('|=================================|');
+  Writeln('|1. FAMILY ROOM - 200$ por noche  |');
+  WriteLn('|=================================|');
+  Writeln('|2. SENCILLA - 60$ por noche      |');
+  WriteLn('|=================================|');
+  Writeln('|3. DOBLE - 120$ por noche        |');
+  WriteLn('|=================================|');
+  Writeln('|4. SUITE - 300$ por noche        |');
+  WriteLn('|=================================|');
+  TextColor(white);
   Writeln('Seleccione: ');
   ReadLn(subopcion);
 
@@ -468,11 +519,19 @@ Begin
   MostrarDetallesHabitaciones();
 
   clrscr;
-  Writeln('Seleccione tipo de habitaciones: ');
-  Writeln('1. FAMILY ROOM - 200$ por noche');
-  Writeln('2. SENCILLA - 60$ por noche');
-  Writeln('3. DOBLE - 120$ por noche');
-  Writeln('4. SUITE - 300$ por noche');
+  TextColor(LightGreen);
+  WriteLn('===================================');
+  Writeln('|Seleccione tipo de habitaciones: |');
+  WriteLn('|=================================|');
+  Writeln('|1. FAMILY ROOM - 200$ por noche  |');
+  WriteLn('|=================================|');
+  Writeln('|2. SENCILLA - 60$ por noche      |');
+  WriteLn('|=================================|');
+  Writeln('|3. DOBLE - 120$ por noche        |');
+  WriteLn('|=================================|');
+  Writeln('|4. SUITE - 300$ por noche        |');
+  WriteLn('|=================================|');
+  TextColor(White);
   Writeln('Seleccione: ');
   ReadLn(subopcion);
 
@@ -592,8 +651,10 @@ End;
 Begin
   clrscr;
   Repeat
+    MostrarBienvenida;
     MostrarMenu();
     ReadLn(opcion);
+    MostrarSalida;
     Case opcion Of 
       1:
          Begin

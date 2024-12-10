@@ -1,0 +1,70 @@
+Nombre: Gino
+Apellido: Cova
+Cedula: 32051249
+Email: ginomargiotta04@gmail.com
+Telefono: 04147932852
+Dias de estadia: 2
+Habitacion: SUITE
+Precio por noche: 300.00 $
+Total a pagar: 600.00 $
+------------------------------------
+Nombre: Chris
+Apellido: Balkaran
+Cedula: 33001249
+Email: gcova@gmail.com
+Telefono: 2345161
+Dias de estadia: 1
+Habitacion: SENCILLA
+Precio por noche: 60.00 $
+Total a pagar: 60.00 $
+------------------------------------
+Nombre: Gini
+Apellido: Cova
+Cedula: 31051249
+Email: gino@gmail.com
+Telefono: 04167932852
+Dias de estadia: 1
+Habitacion: SENCILLA
+Precio por noche: 60.00 $
+Total a pagar: 60.00 $
+------------------------------------
+Nombre: Gino
+Apellido: Cova
+Cedula: 32051249
+Email: ginomargiotta@gmail.com
+Telefono: 04147932852
+Dias de estadia: 1
+Habitacion: FAMILY ROOM
+Precio por noche: 200.00 $
+Total a pagar: 200.00 $
+------------------------------------
+Nombre: Gino
+Apellido: Cova
+Cedula: 32051249
+Email: ginomargiotta@gmail.com
+Telefono: 04141792852
+Dias de estadia: 1
+Habitacion: FAMILY ROOM
+Precio por noche: 200.00 $
+Total a pagar: 200.00 $
+------------------------------------
+Nombre: Gino
+Apellido: Cova
+Cedula: 32051249
+Email: ginomargiotta04@gmail.com
+Telefono: 04147932852
+Dias de estadia: 1
+Habitacion: SENCILLA
+Precio por noche: 60.00 $
+Total a pagar: 60.00 $
+------------------------------------
+Nombre: gino
+Apellido: Margiotta
+Cedula: 31051249
+Email: gino@gmail.com
+Telefono: 04143991776
+Dias de estadia: 1
+Habitacion: SENCILLA
+Precio por noche: 60.00 $
+Total a pagar: 60.00 $
+------------------------------------
